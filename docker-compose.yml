@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  tomcat:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.tomcat
+    volumes:
+      - ./Aaptatt-hiring-assignment:/app
+    ports:
+      - "8080:8080"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.nginx
+    depends_on:
+      - tomcat
+    ports:
+      - "80:80"
+    volumes:
+      - ./Docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
